@@ -1,7 +1,6 @@
 ﻿using IdentityModel;
 using IdentityServer.Core.Models;
 using IdentityServer4.Services;
-using IdentityServer4.Stores;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -18,18 +17,15 @@ namespace IdentityServer.Core.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IIdentityServerInteractionService _interaction;
-        private readonly IClientStore _clientStore;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            IIdentityServerInteractionService interaction,
-            IClientStore clientStore)
+            IIdentityServerInteractionService interaction)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _interaction = interaction;
-            _clientStore = clientStore;
         }
 
         [HttpGet]
@@ -80,22 +76,11 @@ namespace IdentityServer.Core.Controllers
                 ModelState.AddModelError(string.Empty, "Invalid credentials");
             }
 
-            return BadRequest();
+            return View(model);
         }
 
         [HttpGet]
-        public IActionResult Logout(string returnUrl)
-        {
-            var vm = new LoginViewModel()
-            {
-                ReturnUrl = returnUrl
-            };
-
-            return View(vm);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Logout()
+        public async Task<IActionResult> Logout(string logoutId)
         {
             if (User?.Identity.IsAuthenticated == true)
             {
@@ -103,7 +88,9 @@ namespace IdentityServer.Core.Controllers
                 await _signInManager.SignOutAsync();
             }
 
-            return Ok();
+            var logout = await _interaction.GetLogoutContextAsync(logoutId);
+
+            return Redirect(logout.PostLogoutRedirectUri);
         }
 
         [HttpGet]
@@ -138,7 +125,7 @@ namespace IdentityServer.Core.Controllers
                 throw new Exception(result.Errors.First().Description);
             }
 
-            return Ok();
+            return View("RegistrationSuccess");
         }
     }
 }

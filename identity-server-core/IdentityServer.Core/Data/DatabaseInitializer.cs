@@ -24,11 +24,8 @@ namespace IdentityServer.Core.Data
 
                 if (item == null)
                 {
-                    item = new IdentityServer4.EntityFramework.Entities.Client();
                     context.Clients.Add(client.ToEntity());
                 }
-
-                item = client.ToEntity();
             }
 
             foreach (var resource in Config.ApiResources)
@@ -37,11 +34,8 @@ namespace IdentityServer.Core.Data
 
                 if (item == null)
                 {
-                    item = new IdentityServer4.EntityFramework.Entities.ApiResource();
                     context.ApiResources.Add(resource.ToEntity());
                 }
-
-                item = resource.ToEntity();
             }
 
             foreach (var scope in Config.ApiScopes)
@@ -50,11 +44,8 @@ namespace IdentityServer.Core.Data
 
                 if (item == null)
                 {
-                    item = new IdentityServer4.EntityFramework.Entities.ApiScope();
                     context.ApiScopes.Add(scope.ToEntity());
                 }
-
-                item = scope.ToEntity();
             }
 
             context.SaveChanges();

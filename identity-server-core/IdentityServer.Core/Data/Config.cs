@@ -14,6 +14,7 @@ namespace IdentityServer.Core.Data
                     RequireClientSecret = false,
                     RequireConsent = false,
                     RedirectUris = new List<string> { "http://localhost:4200/signin-callback.html" },
+                    PostLogoutRedirectUris = new List<string> { "http://localhost:4200/" },
                     ClientSecrets =
                     {
                         new Secret("secret".Sha256())
