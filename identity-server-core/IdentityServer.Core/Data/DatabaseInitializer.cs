@@ -18,35 +18,46 @@ namespace IdentityServer.Core.Data
 
             context.Database.Migrate();
 
-            if (!context.Clients.Any())
+            foreach (var client in Config.Clients)
             {
-                foreach (var client in Config.Clients)
+                var item = context.Clients.SingleOrDefault(c => c.ClientName == client.ClientName);
+
+                if (item == null)
                 {
+                    item = new IdentityServer4.EntityFramework.Entities.Client();
                     context.Clients.Add(client.ToEntity());
                 }
 
-                context.SaveChanges();
+                item = client.ToEntity();
             }
 
-            if (!context.ApiResources.Any())
+            foreach (var resource in Config.ApiResources)
             {
-                foreach (var resource in Config.ApiResources)
+                var item = context.ApiResources.SingleOrDefault(c => c.Name == resource.Name);
+
+                if (item == null)
                 {
+                    item = new IdentityServer4.EntityFramework.Entities.ApiResource();
                     context.ApiResources.Add(resource.ToEntity());
                 }
 
-                context.SaveChanges();
+                item = resource.ToEntity();
             }
 
-            if (!context.ApiScopes.Any())
+            foreach (var scope in Config.ApiScopes)
             {
-                foreach (var resource in Config.ApiScopes)
+                var item = context.ApiScopes.SingleOrDefault(c => c.Name == scope.Name);
+
+                if (item == null)
                 {
-                    context.ApiScopes.Add(resource.ToEntity());
+                    item = new IdentityServer4.EntityFramework.Entities.ApiScope();
+                    context.ApiScopes.Add(scope.ToEntity());
                 }
 
-                context.SaveChanges();
+                item = scope.ToEntity();
             }
+
+            context.SaveChanges();
         }
     }
 }

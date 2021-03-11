@@ -13,6 +13,7 @@ namespace IdentityServer.Core.Data
                     AllowedGrantTypes = new List<string> { GrantType.AuthorizationCode },
                     RequireClientSecret = false,
                     RequireConsent = false,
+                    RedirectUris = new List<string> { "http://localhost:4200/signin-callback.html" },
                     ClientSecrets =
                     {
                         new Secret("secret".Sha256())
@@ -42,6 +43,9 @@ namespace IdentityServer.Core.Data
 
         public static IEnumerable<ApiScope> ApiScopes = new List<ApiScope>
         {
+            new ApiScope("openid"),
+            new ApiScope("profile"),
+            new ApiScope("email"),
             new ApiScope("read"),
             new ApiScope("write"),
             new ApiScope("identity-server-demo-api")

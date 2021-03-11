@@ -83,6 +83,17 @@ namespace IdentityServer.Core.Controllers
             return BadRequest();
         }
 
+        [HttpGet]
+        public IActionResult Logout(string returnUrl)
+        {
+            var vm = new LoginViewModel()
+            {
+                ReturnUrl = returnUrl
+            };
+
+            return View(vm);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Logout()
         {
