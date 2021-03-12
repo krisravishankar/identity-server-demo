@@ -13,8 +13,8 @@ namespace IdentityServer.Core.Data
                     AllowedGrantTypes = new List<string> { GrantType.AuthorizationCode },
                     RequireClientSecret = false,
                     RequireConsent = false,
-                    RedirectUris = new List<string> { "http://localhost:4200/signin-callback.html" },
-                    PostLogoutRedirectUris = new List<string> { "http://localhost:4200/" },
+                    RedirectUris = new List<string> { "http://localhost:3006/signin-callback.html" },
+                    PostLogoutRedirectUris = new List<string> { "http://localhost:3006/" },
                     ClientSecrets =
                     {
                         new Secret("secret".Sha256())
@@ -22,7 +22,7 @@ namespace IdentityServer.Core.Data
                     AllowedScopes = { "identity-server-demo-api", "write", "read", "openid", "profile", "email" },
                     AllowedCorsOrigins = new List<string>
                     {
-                        "http://localhost:4200",
+                        "http://localhost:3006",
                     },
                     AccessTokenLifetime = 86400
                 }
