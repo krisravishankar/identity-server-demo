@@ -78,9 +78,10 @@ namespace IdentityServer.Demo.Api
                     builder =>
                     {
                         builder
-                        .AllowAnyOrigin()
+                        .WithOrigins("http://localhost:3006")
                         .AllowAnyHeader()
-                        .AllowAnyMethod();
+                        .AllowAnyMethod()
+                        .AllowCredentials();
                     });
             });
         }
@@ -92,6 +93,8 @@ namespace IdentityServer.Demo.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors();
 
             app.UseHttpsRedirection();
 

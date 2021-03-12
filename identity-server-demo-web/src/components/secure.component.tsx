@@ -80,6 +80,11 @@ export default function Secure(): ReactElement {
           {user && <ReactJson src={user} name="user" displayDataTypes={false} quotesOnKeys={false} />}
       </div>
     </div>
+    <div className='row'>
+      <div className='col-md-12 text-left' style={{ marginTop: '30px' }}>
+          {apiResponse && <ReactJson src={apiResponse!} name="apiResponse" displayDataTypes={false} quotesOnKeys={false} />}
+      </div>
+    </div>
     </>
   );
 }

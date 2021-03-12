@@ -1,18 +1,17 @@
 import { Log, User, UserManager, WebStorageStateStore } from 'oidc-client';
-import { Constants } from '../helpers/constants';
 
 export class AuthService {
   public userManager: UserManager;
 
   constructor() {
     const settings = {
-      authority: Constants.authority,
-      client_id: Constants.clientId,
-      redirect_uri: `${Constants.clientRoot}signin-callback.html`,
+      authority: 'https://localhost:5001/',
+      client_id: 'identity-server-demo-web',
+      redirect_uri: 'http://localhost:3006/signin-callback.html',
       monitorSession: false,
-      post_logout_redirect_uri: `${Constants.clientRoot}`,
+      post_logout_redirect_uri: 'http://localhost:3006/',
       response_type: 'code', // for Auth Code flow
-      scope: Constants.clientScope,
+      scope: 'read openid profile email',
       userStore: new WebStorageStateStore({ store: window.localStorage }) // set this to save user info in localStorage
     };
     this.userManager = new UserManager(settings);
