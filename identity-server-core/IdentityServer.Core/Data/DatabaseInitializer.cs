@@ -20,7 +20,7 @@ namespace IdentityServer.Core.Data
 
             foreach (var client in Config.Clients)
             {
-                var item = context.Clients.SingleOrDefault(c => c.ClientName == client.ClientName);
+                var item = context.Clients.SingleOrDefault(c => c.ClientName == client.ClientId);
 
                 if (item == null)
                 {
